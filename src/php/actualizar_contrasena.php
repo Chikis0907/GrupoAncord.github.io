@@ -2,7 +2,7 @@
 include 'conexion.php';
 
 $usuario = $_POST['usuario'] ?? '';
-$nuevaContrasena = $_POST['nuevaContrasena'] ?? '';
+$nuevaContrasena = $_POST['nuevaContrasena'] ?? 0;
 
 if ($usuario === '' || $nuevaContrasena === '') {
     echo "<script>alert('Por favor, llena todos los campos.'); window.history.back();</script>";
