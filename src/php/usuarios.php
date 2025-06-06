@@ -1,8 +1,8 @@
 <?php
 include 'conexion.php';
 
-$usuario = $_POST['usuario1'];
-$password = $_POST['password'];
+$usuario = $_POST['usuario1']??'';
+$password = $_POST['password']??'';
 
 // Preparar y ejecutar la consulta
 $sql = "SELECT * FROM usuarios WHERE usuario = ? AND contrasena = ?";
