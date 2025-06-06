@@ -5,7 +5,7 @@ $usuario = $_POST['usuario1'];
 $password = $_POST['password'];
 
 // Preparar y ejecutar la consulta
-$sql = "SELECT * FROM usuarios WHERE usuario = ? AND contrasena = ?";
+$sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$password'";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("ss", $usuario, $password);
 $stmt->execute();
