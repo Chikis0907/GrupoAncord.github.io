@@ -1,11 +1,8 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "mi_base");
-if ($conexion->connect_error) {
-  die("Error de conexión: " . $conexion->connect_error);
-}
+include 'conexion.php';
 
-$nuevoMin = $_POST['nuevoMin'] ?? '';
-$nuevoMax = $_POST['nuevoMax'] ?? '';
+$nuevoMin = $_POST['nuevoMin'] ?? 0;
+$nuevoMax = $_POST['nuevoMax'] ?? 0;
 
 if ($nuevoMin === '' && $nuevoMax === '') {
   echo "<script>alert('Por favor, llena al menos un campo.'); window.history.back();</script>";
