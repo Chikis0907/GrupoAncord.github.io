@@ -28,7 +28,7 @@ $actualizar = $conexion->prepare("UPDATE usuarios SET contrasena = ? WHERE usuar
 $actualizar->bind_param("ss", $contrasenaHash, $usuario);
 
 if ($actualizar->execute()) {
-    echo "<script>alert('Contraseña actualizada correctamente.'); window.location.href='index.html';</script>";
+    echo "<script>alert('Contraseña actualizada correctamente.'); window.location.href='InicioSesion.html';</script>";
 } else {
     echo "<script>alert('Error al actualizar la contraseña.'); window.history.back();</script>";
 }
