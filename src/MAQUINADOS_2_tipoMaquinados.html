@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de maquinados</title>
+    <link rel="icon" type="image/x-icon" href="../img/groAncor.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Script index -->
+    <script src="../src/js/scripts_maquinados_TipoMaquinado_TipoMaterial.js" defer></script>
+</head>
+
+<body>
+    <div class="container-fluid text-center my-4"> <!-- Container para el logo y el título -->
+        <img src="../img/groAncor.png" class="img-fluid" alt="Logo GroAncor" />
+        <h3 class="mt-4 text-primary">Gestión de costos fijos y variables</h3>
+        <h5>Seleccione los tipos de maquinados:</h5>
+    </div>
+
+    <div class="container-fluid mt-6"> <!-- Container para los checkboxes -->
+        <div class="row justify-content-between">
+            <div class="col-6">
+                <div class="list-group">
+                    <!-- Primera mitad de los checkboxes -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion1" value="1">
+                        <label class="form-check-label" for="opcion1">Torneado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion2" value="1">
+                        <label class="form-check-label" for="opcion2">Fresado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion3" value="1">
+                        <label class="form-check-label" for="opcion3">CNC torneado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion4" value="1">
+                        <label class="form-check-label" for="opcion4">CNC fresado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion5" value="1">
+                        <label class="form-check-label" for="opcion5">Cepillo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion6" value="1">
+                        <label class="form-check-label" for="opcion6">Escoplo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input  acabado-especial" type="checkbox" id="opcion7"  value="2">
+                        <label class="form-check-label" for="opcion7" >Cromo duro </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion8" value="2">
+                        <label class="form-check-label" for="opcion8">Soldadura</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input  acabado-especial" type="checkbox" id="opcion9"  value="2">
+                        <label class="form-check-label" for="opcion9">Corte y doblez</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion10" value="2">
+                        <label class="form-check-label" for="opcion10">Pintura</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion11" value="1">
+                        <label class="form-check-label" for="opcion11">Rectificado cilíndrico</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="list-group">
+                    <!-- Segunda mitad de los checkboxes -->
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion12" value="2">
+                        <label class="form-check-label" for="opcion12">Generado de engranes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion13" value="1">
+                        <label class="form-check-label" for="opcion13">Superficies planas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input  acabado-especial" type="checkbox" id="opcion14"  value="2">
+                        <label class="form-check-label" for="opcion14">Equipo de oxicorte</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion15" value="2">
+                        <label class="form-check-label" for="opcion15">Pailería</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion16" value="1">
+                        <label class="form-check-label" for="opcion16">Corte de material</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion17" value="1">
+                        <label class="form-check-label" for="opcion17">Corte de hilo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion18" value="1">
+                        <label class="form-check-label" for="opcion18">Erosionado CNC</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opcion19" value="1">
+                        <label class="form-check-label" for="opcion19">Maniobras</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion20" value="2">
+                        <label class="form-check-label" for="opcion20">Fundición</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input  acabado-especial" type="checkbox" id="opcion21"  value="2">
+                        <label class="form-check-label" for="opcion21">Tratamiento térmico</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input  acabado-especial" type="checkbox" id="opcion22"  value="2">
+                        <label class="form-check-label" for="opcion22">Recubrimiento PVD</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input acabado-especial" type="checkbox" id="opcion23" value="2">
+                        <label class="form-check-label" for="opcion23">Otros</label>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+
+    <div class="container-fluid text-center mt-5"> <!-- Container para botones -->
+        <div class="row justify-content-around">
+            <div class="col-12 col-md-4 mb-3">
+                <button type="button" class="btn btn-primary btn-lg w-100" id="btn_aceptar_tipoMaquinado">SIGUIENTE</button>
+            </div>
+            <div class="col-12 col-md-4">
+                <button type="button" class="btn btn-primary btn-lg w-100" id="btn_limpiar_tipoMaquinado">LIMPIAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
