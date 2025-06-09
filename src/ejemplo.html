@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensiones del Acero</title>
+    <link rel="icon" type="image/x-icon" href="../img/groAncor.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../src/js/scripts_maquinados.js" defer></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="container-fluid text-center py-4 bg-light">
+        <img src="../img/groAncor.png" class="img-fluid mb-3" alt="Logo GroAncor" />
+        <h3 class="text-primary">Resumen de costos</h3>
+    </header>
+
+    <!-- Results Section -->
+    <main class="container my-5">
+        <section id="resultados" class="mb-5">
+            <h4 class="text-center text-secondary mb-4">Detalles</h4>
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Tipos de maquinado:</label>
+                    <ul id="lista-maquinados" class="list-group">
+                        <!-- Aquí se insertarán los <li> -->
+                    </ul>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Tipo de material:</label>
+                    <input type="text" class="form-control" id="txt_tipoMaterial" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Precio total de material:</label>
+                    <input type="text" class="form-control" id="txt_CostoKg" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Tiempo de maquinado:</label>
+                    <input type="text" class="form-control" id="txt_TiempoMaquinado" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Costo total de operación:</label>
+                    <input type="text" class="form-control" id="txt_CostoTotalOperacion" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Volumen a maquinar:</label>
+                    <input type="text" class="form-control" id="txt_VolumenFinal" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Avance:</label>
+                    <input type="text" class="form-control" id="txt_avance" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Costo de herramienta:</label>
+                    <input type="text" class="form-control" id="txt_CostoTotalHerramienta" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Logística:</label>
+                    <input type="text" class="form-control" id="txt_logistica" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Administración:</label>
+                    <input type="text" class="form-control" id="txt_Administración" readonly>
+                </div>
+            </div>
+        </section>
+
+        <!-- Costos Extras Section -->
+        <section class="mb-5">
+            <h4 class="text-center text-secondary mb-4">Costos Extras</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Material</th>
+                            <th>Precio asignado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-costos-acabados">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Resultados Section -->
+        <section class="text-center mb-5">
+            <h4 class="text-primary">Resultados</h4>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <label class="form-label">Costo total:</label>
+                    <input type="number" class="form-control" id="txt_costoTotalGral" readonly>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buttons Section -->
+        <section class="text-center">
+            <div class="row justify-content-around">
+                <div class="col-md-4 mb-3">
+                    <button type="button" class="btn btn-primary btn-lg w-100" id="btn_guardar_resumenCosto">GUARDAR</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary btn-lg w-100" id="btn_Regresar_Menu">MENÚ</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
