@@ -1,8 +1,8 @@
 <?php
-$host = "sql301.infinityfree.com";
-$db = "if0_39300121_ancord";
-$user = "if0_39300121";
-$pass = "YiWXamIVaF";
+$host = "localhost"; // o IP del servidor
+$usuario = "root";   // tu usuario de MySQL
+$contrasena = "";    // tu contraseña de MySQL
+$base_datos = "gro_ancor";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
