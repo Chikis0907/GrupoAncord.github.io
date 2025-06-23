@@ -22,12 +22,15 @@ if ($usuario === '' || $password === '') {
 }
 
 // Verificar si el usuario existe en la base de datos
-$sql = "SELECT * FROM usuarios WHERE usuario = ?";
+// Verificar si el usuario existe en la base de datos
+/*$sql = "SELECT * FROM usuarios WHERE usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $usuario);
 $stmt->execute();
-$result = $stmt->get_result();
-
+$result = $stmt->get_result();*/
+$sql = "SELECT * FROM usuarios WHERE usuario = ? AND password = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $usuario, $password);
 if ($result->num_rows === 1 && $password === $clave_fija) {
     echo "OK";
 } else {
