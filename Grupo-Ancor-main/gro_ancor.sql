@@ -55,8 +55,8 @@ CREATE TABLE usuarios (
 );
 
 -- Insertar un usuario de ejemplo
-INSERT INTO usuarios (usuario, contrasena)
-VALUES ('usuario', '123321');
+INSERT INTO usuarios (id,usuario, contrasena)
+VALUES (1,'usuario', '123321');
 -- Nota: usa password_hash en PHP para generar la contraseña antes de insertar
 
 
