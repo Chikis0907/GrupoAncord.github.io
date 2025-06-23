@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Contraseña</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+        .login-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .password-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8e8e8;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Buscar Contraseña</h2>
+        <form id="searchForm">
+            <input type="text" placeholder="Usuario" name="usuario" id="usuario" required>
+            <button type="submit">Buscar</button>
+        </form>
+        <div id="passwordBox" class="password-box">
+            Contraseña: <strong id="passwordOutput"></strong>
+        </div>
+    </div>
+
+    <script>
+    const form = document.getElementById('searchForm');
+    const passwordBox = document.getElementById('passwordBox');
+    const passwordOutput = document.getElementById('passwordOutput');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const usuario = document.getElementById('usuario').value;
+
+        fetch(`buscar.php?usuario=${encodeURIComponent(usuario)}`)
+            .then(response => response.text())
+            .then(data => {
+                passwordOutput.textContent = data;
+                passwordBox.style.display = 'block';
+            })
+            .catch(error => {
+                passwordOutput.textContent = 'Error en la consulta';
+                passwordBox.style.display = 'block';
+            });
+    });
+</script>
+</body>
+</html>
