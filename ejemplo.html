@@ -1,0 +1,55 @@
+<?php
+// Conexión a la base de datos
+$host = "localhost";
+$usuario = "root";          // Ajusta si tu usuario es distinto
+$contrasena = "root";       // Ajusta si tu contraseña es distinta
+$base_datos = "usuarios";   // Nombre de la base de datos
+
+// Crear conexión
+$conn = new mysqli($host, $usuario, $contrasena, $base_datos);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Consultar usuarios
+$sql = "SELECT usuario, contrasena FROM usuarios";
+$resultado = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Registrados</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px; }
+        .card { background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h2 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Usuarios en la Base de Datos</h2>
+        <table>
+            <tr>
+                <th>Usuario</th>
+                <th>Contraseña</th>
+            </tr>
+            <?php
+            if ($resultado->num_rows > 0) {
+                while($fila = $resultado->fetch_assoc()) {
+                    echo "<tr><td>" . htmlspecialchars($fila["usuario"]) . "</td><td>" . htmlspecialchars($fila["contrasena"]) . "</td></tr>";
+                }
+            } else {
+                echo "<tr><td colspan='2'>No se encontraron usuarios.</td></tr>";
+            }
+            $conn->close();
+            ?>
+        </table>
+    </div>
+</body>
+</html>
