@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tomar Fotografía</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        video,
+        canvas {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body class="container py-4">
+    <h3 class="text-center text-primary">Captura de Fotografía</h3>
+    <div class="text-center mb-3">
+        <video id="video" autoplay playsinline width="100%" height="auto"></video><br>
+        <button class="btn btn-success" onclick="tomarFoto()">Capturar</button>
+    </div>
+    <div class="text-center mb-4">
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+    <div class="text-center">
+        <a href="tratamientos_termicos.html" class="btn btn-secondary">Volver</a>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Acceder a la cámara
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert("Error al acceder a la cámara: " + err);
+            });
+
+        function tomarFoto() {
+            canvas.style.display = 'block';
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+        }
+    </script>
+</body>
+
+</html>
