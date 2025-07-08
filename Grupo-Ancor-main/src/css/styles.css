@@ -1,0 +1,190 @@
+/* Estilos Generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Contenedor de los títulos */
+h3 {
+    font-weight: bold;
+}
+
+/* Ajuste de los botones */
+.btn {
+    width: 100%;
+}
+
+/* Botones personalizados */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.navbar {
+    background-color: #A21686;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: #e6e2e8 !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #de68a6 !important;
+}
+
+.section {
+    padding: 60px 0;
+}
+
+.section h2 {
+    color: #A21686;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: #544c4c;
+    color: #e6e2e8;
+}
+
+.card-title {
+    color: #A21686;
+}
+
+.footer {
+    background-color: #132448;
+    color: #e6e2e8;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.table {
+    background-color: white;  /* Fondo blanco */
+    border-radius: 8px;  /* Bordes redondeados */
+    overflow: hidden;  /* Evita desbordamiento */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.table td {
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+    border: 1px solid #ddd; /* Bordes suaves */
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Color al pasar el cursor */
+}
+
+/* Logo */
+img.img-fluid {
+    max-width: 200px;
+}
+
+/* Form Styling */
+.form-label {
+    font-weight: bold;
+}
+
+.form-select, .form-control {
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+.table {
+    margin-top: 15px;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Buttons */
+.btn-lg {
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+/* Result Section */
+#resultados input {
+    font-size: 14px;
+    width: 20%;
+}
+
+#resultados span {
+    font-size: 14px;
+}
+
+/* Estilo para el contenedor de las opciones */
+.list-group {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Mejoras de espaciado */
+.mt-4, .my-4, .mb-3 {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 767px) {
+    .col-md-5 {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .container {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+.list-group {
+    max-height: 100%; /* Se ajusta automáticamente según el contenido */
+    overflow-y: auto; /* Habilita desplazamiento si hay demasiado contenido */
+}
+
+.form-check-input {
+    width: 15px;  /* Ajusta el tamaño del checkbox */
+    height: 15px; /* Ajusta el tamaño del checkbox */
+    border: 1px solid black; /* Borde negro */
+    margin-right: 8px; /* Espacio entre checkbox y texto */
+}
+
+.subseccion {
+    color: #007bff;
+    font-weight: bold; /* Opcional: para resaltar más el texto */
+    font-size: 1.2rem; /* Opcional: para ajustar el tamaño del texto */
+}
+.activo {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 576px) {
+    h3 {
+        font-size: 1.2rem;
+    }
+    button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustes para pantallas medianas */
+@media (min-width: 768px) and (max-width: 992px) {
+    h3 {
+        font-size: 1.5rem;
+    }
+    button {
+        font-size: 1rem;
+    }
+}
