@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Carrito de compras</title>
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <!-- HEADER con logo a la izquierda y hamburguesa arriba a la derecha -->
+  <header class="header">
+    <a href="index.html" class="logo-link" aria-label="Ir al inicio"><img src="img/groAncor.png" alt="logo" width="130" height="60"></a>
+    <div class="header__right">
+      <button class="burger" aria-label="Abrir menú" title="Abrir menú"><span></span></button>
+    </div>
+  </header>
+
+  <!-- Drawer / menú -->
+  <aside class="drawer" aria-hidden="true">
+    <button class="drawer__close" aria-label="Cerrar">✕</button>
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="acerca.html">Acerca de</a>
+      <a href="contacto.html">Contáctanos</a>
+      <a href="carrito.html">Carrito</a>
+  </aside>
+
+  <main class="container">
+    <h1>Tu Carrito</h1>
+    <div id="cart-root">
+      <p class="empty">Tu carrito está vacío.</p>
+    </div>
+  </main>
+
+  <!-- Modal: Enviar lista -->
+  <div class="modal fade" id="sendListModal" tabindex="-1" aria-labelledby="sendListLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="sendListForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sendListLabel">Enviar lista por correo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="buyerName" class="form-label">Nombre completo</label>
+            <input type="text" id="buyerName" class="form-control" placeholder="Tu nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="buyerEmail" class="form-label">Correo electrónico</label>
+            <input type="email" id="buyerEmail" class="form-control" placeholder="tucorreo@ejemplo.com" required>
+          </div>
+          <div class="form-text">Se enviará un PDF con el detalle del carrito.</div>
+          <div id="sendFeedback" class="small mt-2"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" id="confirmSendBtn" class="btn btn-primary">
+            Enviar PDF
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer con recuadro de contacto -->
+  <footer class="footer">
+    <div class="contact">
+      <div class="info">
+        <h3 style="margin:0">Grupo Industrial Ancor</h3>
+        <span>Derechos reservados · Copyright</span>
+        <h5 style="margin:8px 0 0">Ubicación</h5>
+        <span>📍 C.18 de Julio 39, Juárez, 54405 Cdad. Nicolás Romero, Méx.</span>
+        <h5 style="margin:8px 0 0">Contacto</h5>
+        <span>☎️ +52 5527841859</span>
+        <span>✉️ proyecto@grupoindustrialancor.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jsPDF + AutoTable (para generar el PDF) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- EmailJS (para enviar sin servidor). Configúralo con tu public key. -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ⬇⬇⬇ PON AQUÍ TU PUBLIC KEY DE EMAILJS (opcional). Ejemplo: emailjs.init({ publicKey: "YOUR_PUBLIC_KEY" });
+    // emailjs.init({ publicKey: "TU_PUBLIC_KEY_DE_EMAILJS" });
+  </script>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

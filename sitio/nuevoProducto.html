@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuevo producto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .cam-card{max-width:900px;margin:0 auto}
+    video, canvas{width:100%;max-width:520px;border:1px solid var(--border);border-radius:12px}
+    .preview-img{max-width:220px;border:1px solid var(--border);border-radius:10px}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo-link" aria-label="Ir al inicio"><img src="img/groAncor.png" alt="logo" width="130" height="60"></a>
+    <div class="header__right"></div>
+  </header>
+
+  <main class="container">
+    <h1 class="mb-3">Registrar nuevo producto</h1>
+    <div class="card cam-card">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-6">
+          <h2 class="h6">Cámara</h2>
+          <video id="video" playsinline autoplay muted></video>
+          <div class="mt-2 d-flex gap-2">
+            <button id="btnStart" class="btn">Encender cámara</button>
+            <button id="btnShot" class="btn secondary" disabled>Tomar foto</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2 class="h6">Previsualización</h2>
+          <canvas id="canvas" class="d-none"></canvas>
+          <img id="preview" class="preview-img d-block" alt="Vista previa"/>
+          <div class="small text-muted mt-2">También puedes cargar una imagen:</div>
+          <input type="file" id="fileInput" accept="image/*" class="form-control mt-1"/>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <div class="d-flex gap-2">
+        <button id="btnSave" class="btn">Guardar</button>
+        <a href="catalogo.html" class="btn secondary">Regresar al catálogo</a>
+        <button id="btnManage" class="btn secondary">Borrar productos</button>
+      </div>
+      <div id="saveMsg" class="small mt-2"></div>
+    </div>
+  </main>
+
+  <!-- Modal para datos del producto -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="productForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Datos del producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre del producto</label>
+            <input id="pname" type="text" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input id="pprice" type="number" step="0.01" min="0" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción (opcional)</label>
+            <textarea id="pdesc" class="form-control" rows="3" placeholder="Opcional"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn">Guardar producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para borrar productos agregados -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Borrar productos agregados</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="delAll">
+              <label class="form-check-label" for="delAll">Seleccionar todo</label>
+            </div>
+            <span id="delCount" class="badge">0 seleccionados</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:40px;"></th>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Creado</th>
+                </tr>
+              </thead>
+              <tbody id="delTbody">
+                <tr><td colspan="4" class="text-muted">No hay productos agregados.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="confirmDelete" class="btn">Eliminar seleccionados</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    // ====== Gestión de borrado de productos (localStorage:newProducts) ======
+    const manageBtn = document.getElementById('btnManage');
+    const delTbody = document.getElementById('delTbody');
+    const delAll = document.getElementById('delAll');
+    const delCount = document.getElementById('delCount');
+    const confirmDelete = document.getElementById('confirmDelete');
+
+    function lsGet(){ try { return JSON.parse(localStorage.getItem('newProducts')||'[]'); } catch(e){ return []; } }
+    function lsSet(arr){ localStorage.setItem('newProducts', JSON.stringify(arr||[])); }
+
+    function renderDeleteList(){
+      const items = lsGet();
+      if (!items.length){
+        delTbody.innerHTML = '<tr><td colspan="4" class="text-muted">No hay productos agregados.</td></tr>';
+        if (delAll) delAll.checked = false;
+        updateSelectedCount();
+        return;
+      }
+      delTbody.innerHTML = items.map((p) => {
+        const when = new Date(p.createdAt||Date.now()).toLocaleString();
+        const price = (typeof p.price === 'number' ? p.price : parseFloat(p.price||'0')) || 0;
+        return `
+          <tr>
+            <td><input type="checkbox" class="form-check-input delCheck" data-ts="${p.createdAt}" /></td>
+            <td>${p.name || 'Producto'}</td>
+            <td>$${price.toFixed(2)}</td>
+            <td>${when}</td>
+          </tr>`;
+      }).join('');
+      updateSelectedCount();
+    }
+
+    function getSelectedKeys(){
+      return Array.from(document.querySelectorAll('.delCheck:checked')).map(ch => ch.getAttribute('data-ts'));
+    }
+    function updateSelectedCount(){
+      const n = getSelectedKeys().length;
+      if (delCount) delCount.textContent = n + ' seleccionados';
+    }
+
+    if (manageBtn){
+      manageBtn.addEventListener('click', () => {
+        renderDeleteList();
+        const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show();
+      });
+    }
+    if (delTbody){
+      delTbody.addEventListener('change', (e) => {
+        if (e.target.classList.contains('delCheck')) updateSelectedCount();
+      });
+    }
+    if (delAll){
+      delAll.addEventListener('change', () => {
+        document.querySelectorAll('.delCheck').forEach(ch => ch.checked = delAll.checked);
+        updateSelectedCount();
+      });
+    }
+    if (confirmDelete){
+      confirmDelete.addEventListener('click', () => {
+        const keys = getSelectedKeys();
+        if (!keys.length){
+          alert('Selecciona al menos un producto.');
+          return;
+        }
+        const items = lsGet();
+        const filtered = items.filter(p => !keys.includes(String(p.createdAt)));
+        lsSet(filtered);
+        renderDeleteList();
+        saveMsg.className = 'small mt-2 text-success';
+        saveMsg.textContent = 'Se eliminaron ' + keys.length + ' producto(s).';
+      });
+    }
+
+  </script>
+  <script>
+    // Protección básica: requiere login
+    if (sessionStorage.getItem('isLogged') !== '1'){
+      window.location.href = 'inicioS.html';
+    }
+
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const preview = document.getElementById('preview');
+    const btnStart = document.getElementById('btnStart');
+    const btnShot = document.getElementById('btnShot');
+    const btnSave = document.getElementById('btnSave');
+    const fileInput = document.getElementById('fileInput');
+    const saveMsg = document.getElementById('saveMsg');
+
+    let stream = null;
+    let photoDataUrl = ''; // imagen tomada o cargada
+
+    btnStart.addEventListener('click', async () => {
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = stream;
+        btnShot.disabled = false;
+      } catch(err){
+        saveMsg.className = 'small mt-2 text-danger';
+        saveMsg.textContent = 'No se pudo acceder a la cámara. Puedes cargar una imagen desde archivo.';
+      }
+    });
+
+    btnShot.addEventListener('click', () => {
+      if (!video.videoWidth){ return; }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      photoDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      preview.src = photoDataUrl;
+    });
+
+    // Cargar imagen desde archivo (alternativa)
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        photoDataUrl = reader.result;
+        preview.src = photoDataUrl;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Guardar -> abre modal para pedir datos
+    btnSave.addEventListener('click', () => {
+      if (!photoDataUrl){
+        saveMsg.className = 'small mt-2 text-warning';
+        saveMsg.textContent = 'Primero toma una foto o carga una imagen.';
+        return;
+      }
+      const modal = new bootstrap.Modal(document.getElementById('productModal'));
+      modal.show();
+    });
+
+    // Guardar en localStorage cuando se envía el modal
+    document.getElementById('productForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('pname').value.trim();
+      const price = parseFloat(document.getElementById('pprice').value || '0');
+      const desc = document.getElementById('pdesc').value.trim();
+
+      if (!name || !(price >= 0)){
+        return;
+      }
+      const item = { id: name, name, price, desc, image: photoDataUrl, createdAt: Date.now() };
+      const KEY = 'newProducts';
+      const list = JSON.parse(localStorage.getItem(KEY) || '[]');
+      list.push(item);
+      localStorage.setItem(KEY, JSON.stringify(list));
+
+      saveMsg.className = 'small mt-2 text-success';
+      saveMsg.textContent = 'Producto guardado y aparecerá en el catálogo.';
+      bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+
+      // Detener cámara (si está activa) para liberar recursos
+      if (stream){
+        stream.getTracks().forEach(t => t.stop());
+      }
+    });
+  
+    // ====== Gestión de borrado de productos (localStorage:newProducts) ======
+    const manageBtn = document.getElementById('btnManage');
+    const delTbody = document.getElementById('delTbody');
+    const delAll = document.getElementById('delAll');
+    const delCount = document.getElementById('delCount');
+    const confirmDelete = document.getElementById('confirmDelete');
+
+    function lsGet(){ try { return JSON.parse(localStorage.getItem('newProducts')||'[]'); } catch(e){ return []; } }
+    function lsSet(arr){ localStorage.setItem('newProducts', JSON.stringify(arr||[])); }
+
+    function renderDeleteList(){
+      const items = lsGet();
+      if (!items.length){
+        delTbody.innerHTML = '<tr><td colspan="4" class="text-muted">No hay productos agregados.</td></tr>';
+        if (delAll) delAll.checked = false;
+        updateSelectedCount();
+        return;
+      }
+      delTbody.innerHTML = items.map((p) => {
+        const when = new Date(p.createdAt||Date.now()).toLocaleString();
+        const price = (typeof p.price === 'number' ? p.price : parseFloat(p.price||'0')) || 0;
+        return `
+          <tr>
+            <td><input type="checkbox" class="form-check-input delCheck" data-ts="${p.createdAt}" /></td>
+            <td>${p.name || 'Producto'}</td>
+            <td>$${price.toFixed(2)}</td>
+            <td>${when}</td>
+          </tr>`;
+      }).join('');
+      updateSelectedCount();
+    }
+
+    function getSelectedKeys(){
+      return Array.from(document.querySelectorAll('.delCheck:checked')).map(ch => ch.getAttribute('data-ts'));
+    }
+    function updateSelectedCount(){
+      const n = getSelectedKeys().length;
+      if (delCount) delCount.textContent = n + ' seleccionados';
+    }
+
+    if (manageBtn){
+      manageBtn.addEventListener('click', () => {
+        renderDeleteList();
+        const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show();
+      });
+    }
+    if (delTbody){
+      delTbody.addEventListener('change', (e) => {
+        if (e.target.classList.contains('delCheck')) updateSelectedCount();
+      });
+    }
+    if (delAll){
+      delAll.addEventListener('change', () => {
+        document.querySelectorAll('.delCheck').forEach(ch => ch.checked = delAll.checked);
+        updateSelectedCount();
+      });
+    }
+    if (confirmDelete){
+      confirmDelete.addEventListener('click', () => {
+        const keys = getSelectedKeys();
+        if (!keys.length){
+          alert('Selecciona al menos un producto.');
+          return;
+        }
+        const items = lsGet();
+        const filtered = items.filter(p => !keys.includes(String(p.createdAt)));
+        lsSet(filtered);
+        renderDeleteList();
+        saveMsg.className = 'small mt-2 text-success';
+        saveMsg.textContent = 'Se eliminaron ' + keys.length + ' producto(s).';
+      });
+    }
+
+  </script>
+</body>
+</html>
